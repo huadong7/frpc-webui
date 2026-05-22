@@ -1,0 +1,19 @@
+services:
+  frpc-manager:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile-for-frpc-manager
+    container_name: frpc-manager
+    ports:
+      - "7400:7400"
+    volumes:
+      - frpc_data:/data
+    restart: unless-stopped
+    environment:
+      - FRPC_WEB_PORT=7400
+      # - FRPC_WEB_USER=admin
+      # - FRPC_WEB_PASSWORD=changeme
+      - TZ=Asia/Shanghai
+
+volumes:
+  frpc_data:

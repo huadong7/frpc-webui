@@ -1,0 +1,28 @@
+# Deployment Dockerfile using pre-built Linux binary
+# Build the binary first: GOOS=linux GOARCH=amd64 make frpc
+# Then: docker build -f dockerfiles/Dockerfile-for-frpc-manager-deploy -t frpc-manager .
+
+FROM alpine:3
+
+RUN apk add --no-cache tzdata ca-certificates wget
+
+# Copy pre-built binary
+COPY bin/frpc-linux-amd64 /usr/bin/frpc
+RUN chmod +x /usr/bin/frpc
+
+RUN mkdir -p /data
+VOLUME ["/data"]
+
+EXPOSE 7400
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:7400/healthz || exit 1
+
+ENV FRPC_WEB_ADDR=0.0.0.0
+ENV FRPC_WEB_PORT=7400
+ENV FRPC_PROFILES_PATH=/data/frpc_profiles.json
+
+ENTRYPOINT ["/usr/bin/frpc", \
+  "--profiles-path", "/data/frpc_profiles.json", \
+  "--web-addr", "0.0.0.0", \
+  "--web-port", "7400"]

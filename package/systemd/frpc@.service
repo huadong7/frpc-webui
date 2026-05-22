@@ -1,0 +1,26 @@
+[Unit]
+Description=frp Client Manager (%I)
+Documentation=https://github.com/fatedier/frp
+After=network.target
+
+[Service]
+Type=simple
+User=frp
+Group=frp
+ExecStart=/usr/bin/frpc --profiles-path /var/lib/frp/%i/profiles.json --web-addr 0.0.0.0 --web-port ${FRPC_WEB_PORT:-7400}
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=65536
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/frp
+PrivateTmp=yes
+
+# Environment
+EnvironmentFile=-/etc/frp/%i.env
+
+[Install]
+WantedBy=multi-user.target
