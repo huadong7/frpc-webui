@@ -82,6 +82,20 @@
         </el-form-item>
       </ConfigSection>
 
+      <!-- Frps Dashboard -->
+      <ConfigSection title="Frps Dashboard (Optional)" :expanded="false">
+        <el-form-item label="Dashboard Address">
+          <el-input v-model="form.dashboard.addr" placeholder="e.g., http://192.168.1.100:7500" />
+          <span class="form-tip">Used to query port usage from frps server</span>
+        </el-form-item>
+        <el-form-item label="Dashboard User">
+          <el-input v-model="form.dashboard.user" placeholder="Dashboard username" />
+        </el-form-item>
+        <el-form-item label="Dashboard Password">
+          <el-input v-model="form.dashboard.password" type="password" show-password placeholder="Dashboard password" />
+        </el-form-item>
+      </ConfigSection>
+
       <div class="form-actions">
         <el-button @click="handleCancel">Cancel</el-button>
         <el-button type="primary" :loading="saving" @click="handleSave">
@@ -124,6 +138,7 @@ const defaultForm = (): ProfileConfig => ({
   user: '',
   clientID: '',
   autoStart: true,
+  dashboard: { addr: '', user: '', password: '' },
 })
 
 const form = reactive<ProfileConfig>(defaultForm())

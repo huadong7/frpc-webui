@@ -59,6 +59,9 @@ func registerProfileRoutes(helper *httppkg.RouterRegisterHelper, m *FrpcManager)
 	api.HandleFunc("/profiles/{name}/visitors/{visitorName}", httppkg.MakeHTTPHandlerFunc(handleUpdateProfileVisitor(m))).Methods(http.MethodPut)
 	api.HandleFunc("/profiles/{name}/visitors/{visitorName}", httppkg.MakeHTTPHandlerFunc(handleDeleteProfileVisitor(m))).Methods(http.MethodDelete)
 
+	// Profile-scoped frps dashboard query
+	api.HandleFunc("/profiles/{name}/ports/used", httppkg.MakeHTTPHandlerFunc(handleGetProfileUsedPorts(m))).Methods(http.MethodGet)
+
 	// Static files - registered on main router (not /api), with auth
 	subRouter := helper.Router.NewRoute().Subrouter()
 	subRouter.Use(helper.AuthMiddleware)
@@ -448,5 +451,18 @@ func handlePutConfig(m *FrpcManager) httppkg.APIHandler {
 func handleReload(m *FrpcManager) httppkg.APIHandler {
 	return func(ctx *httppkg.Context) (any, error) {
 		return map[string]any{"message": "Reload not needed in manager mode - changes are applied immediately."}, nil
+	}
+}
+
+// ─── Frps Dashboard Query Handlers ─────────────────────
+
+func handleGetProfileUsedPorts(m *FrpcManager) httppkg.APIHandler {
+	return func(ctx *httppkg.Context) (any, error) {
+		name := ctx.Param("name")
+		usedPorts, err := m.GetProfileUsedPorts(name)
+		if err != nil {
+			return nil, httppkg.NewError(http.StatusBadRequest, err.Error())
+		}
+		return usedPorts, nil
 	}
 }

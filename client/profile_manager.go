@@ -116,6 +116,22 @@ func (m *FrpcManager) GetProfileServerAddr(name string) string {
 	return fmt.Sprintf("%s:%d", entry.Config.ServerAddr, entry.Config.ServerPort)
 }
 
+// GetProfileUsedPorts queries the frps dashboard for used ports.
+func (m *FrpcManager) GetProfileUsedPorts(name string) (*UsedPorts, error) {
+	entry, ok := m.profileStore.GetProfile(name)
+	if !ok {
+		return nil, fmt.Errorf("profile %q not found", name)
+	}
+
+	dashboard := entry.Config.Dashboard
+	if dashboard.Addr == "" {
+		return nil, fmt.Errorf("frps dashboard address not configured for profile %q", name)
+	}
+
+	client := NewFrpsClient(dashboard.Addr, dashboard.User, dashboard.Password)
+	return client.GetUsedPorts()
+}
+
 // ─── Profile Management ────────────────────────────────────────────
 
 // ListProfiles returns all profiles with their runtime statuses.

@@ -10,6 +10,7 @@ A multi-profile web management UI for [frp](https://github.com/fatedier/frp) cli
 - **Web Admin UI** — Intuitive browser-based interface for managing all proxy configurations
 - **CRUD Proxy Operations** — Add, update, and remove TCP/UDP/HTTP proxies dynamically at runtime
 - **Persistent Storage** — Profiles are saved to disk and automatically restored on restart
+- **Port Conflict Detection** — Real-time detection of port conflicts with existing proxies on the frps server
 - **Docker Ready** — Pre-built Docker image for quick deployment
 - **API Access** — RESTful API for programmatic profile and proxy management
 
@@ -88,6 +89,7 @@ See [conf/frpc_full_example.toml](conf/frpc_full_example.toml) for all available
 | PUT | `/api/profiles/:name` | Update a profile |
 | DELETE | `/api/profiles/:name` | Delete a profile |
 | POST | `/api/profiles/:name/start` | Start a profile |
+| GET | `/api/profiles/:name/ports/used` | Get used ports on frps server for a profile |
 
 ## Acknowledgements
 

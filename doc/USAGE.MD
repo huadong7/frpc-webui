@@ -31,3 +31,9 @@
   └─────────────────┴──────────────────────┴────────────────┘
 
   支持的环境变量：FRPC_WEB_ADDR、FRPC_WEB_PORT、FRPC_WEB_USER、FRPC_WEB_PASSWORD、FRPC_PROFILES_PATH
+
+## 端口冲突检测
+
+frpc-webui 现在支持实时检测端口冲突。在配置代理时，系统会自动查询 frps 服务器上已使用的端口，并在输入框中显示已使用的端口列表。如果输入的远程端口已被占用，会显示错误警告，避免配置冲突。
+
+此功能需要配置 frps dashboard 地址（在 profile 的 dashboard 部分）。如果未配置 dashboard 地址，端口冲突检测将被禁用。

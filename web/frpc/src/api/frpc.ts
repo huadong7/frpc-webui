@@ -213,3 +213,15 @@ export const deleteProfileVisitor = (profile: string, name: string) => {
     `/api/profiles/${encodeURIComponent(profile)}/visitors/${encodeURIComponent(name)}`,
   )
 }
+
+// Frps dashboard query - used ports
+export interface UsedPorts {
+  tcp: number[]
+  udp: number[]
+}
+
+export const getProfileUsedPorts = (profile: string) => {
+  return http.get<UsedPorts>(
+    `/api/profiles/${encodeURIComponent(profile)}/ports/used`,
+  )
+}

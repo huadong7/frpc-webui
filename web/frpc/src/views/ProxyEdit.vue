@@ -24,7 +24,7 @@
         label-position="top"
         @submit.prevent
       >
-        <ProxyFormLayout v-model="form" :editing="isEditing" />
+        <ProxyFormLayout v-model="form" :editing="isEditing" :used-ports="usedPorts" />
       </el-form>
     </div>
 
@@ -50,7 +50,7 @@ import {
   formToStoreProxy,
   storeProxyToForm,
 } from '../types'
-import { getStoreProxy, getProfileProxy, createProfileProxy, updateProfileProxy } from '../api/frpc'
+import { getStoreProxy, getProfileProxy, createProfileProxy, updateProfileProxy, getProfileUsedPorts } from '../api/frpc'
 import { useProxyStore } from '../stores/proxy'
 import ActionButton from '@shared/components/ActionButton.vue'
 import ConfirmDialog from '@shared/components/ConfirmDialog.vue'
@@ -75,6 +75,7 @@ const form = ref<ProxyFormData>(createDefaultProxyForm())
 const dirty = ref(false)
 const formSaved = ref(false)
 const trackChanges = ref(false)
+const usedPorts = ref<number[]>([])
 
 const rules: FormRules = {
   name: [
@@ -187,6 +188,17 @@ const loadProxy = async () => {
   }
 }
 
+const loadUsedPorts = async () => {
+  if (!isProfileScoped.value || !profileName.value) return
+  try {
+    const res = await getProfileUsedPorts(profileName.value)
+    usedPorts.value = [...(res.tcp || []), ...(res.udp || [])]
+  } catch {
+    // Dashboard not configured or unreachable, ignore silently
+    usedPorts.value = []
+  }
+}
+
 const handleSave = async () => {
   if (!formRef.value) return
 
@@ -229,6 +241,7 @@ const handleSave = async () => {
 }
 
 onMounted(() => {
+  loadUsedPorts()
   if (isEditing.value) {
     loadProxy()
   } else {

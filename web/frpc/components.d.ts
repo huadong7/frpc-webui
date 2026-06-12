@@ -24,6 +24,7 @@ declare module 'vue' {
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElTag: typeof import('element-plus/es')['ElTag']
     KeyValueEditor: typeof import('./src/components/KeyValueEditor.vue')['default']
     ProfileSelector: typeof import('./src/components/ProfileSelector.vue')['default']
     ProfileStatusBadge: typeof import('./src/components/ProfileStatusBadge.vue')['default']

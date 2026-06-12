@@ -1,5 +1,11 @@
 import type { ProxyDefinition } from './proxy-store'
 
+export interface DashboardConfig {
+  addr?: string
+  user?: string
+  password?: string
+}
+
 export interface ProfileConfig {
   name: string
   serverAddr: string
@@ -31,6 +37,7 @@ export interface ProfileConfig {
   dnsServer?: string
   udpPacketSize?: number
   autoStart: boolean
+  dashboard?: DashboardConfig
 }
 
 export interface ProfileEntry {

@@ -18,6 +18,13 @@ import (
 	v1 "github.com/fatedier/frp/pkg/config/v1"
 )
 
+// DashboardConfig holds the frps dashboard connection info for querying port usage.
+type DashboardConfig struct {
+	Addr     string `json:"addr,omitempty"`
+	User     string `json:"user,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
 // ProfileConfig holds the connection configuration for one frps server.
 type ProfileConfig struct {
 	Name          string                   `json:"name"`
@@ -34,6 +41,8 @@ type ProfileConfig struct {
 	UDPPacketSize int64                    `json:"udpPacketSize,omitempty"`
 	// AutoStart controls whether this profile automatically starts when frpc launches.
 	AutoStart bool `json:"autoStart,omitempty"`
+	// Dashboard holds the frps dashboard connection info for querying port usage.
+	Dashboard DashboardConfig `json:"dashboard,omitempty"`
 }
 
 // ProfileEntry is a complete profile unit containing server config plus its proxies and visitors.
