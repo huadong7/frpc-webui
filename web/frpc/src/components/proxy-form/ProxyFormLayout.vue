@@ -4,7 +4,7 @@
       <ProxyBaseSection v-model="form" :readonly="readonly" :editing="editing" />
       <ProxyRemoteSection
         v-if="['tcp', 'udp', 'http', 'https', 'tcpmux'].includes(form.type)"
-        v-model="form" :readonly="readonly" :used-ports="usedPorts" />
+        v-model="form" :readonly="readonly" :used-ports="usedPorts" :used-ports-error="usedPortsError" />
       <ProxyBackendSection v-model="form" :readonly="readonly" />
     </ConfigSection>
 
@@ -40,7 +40,8 @@ const props = withDefaults(defineProps<{
   readonly?: boolean
   editing?: boolean
   usedPorts?: number[]
-}>(), { readonly: false, editing: false, usedPorts: () => [] })
+  usedPortsError?: boolean
+}>(), { readonly: false, editing: false, usedPorts: () => [], usedPortsError: false })
 
 const emit = defineEmits<{ 'update:modelValue': [value: ProxyFormData] }>()
 

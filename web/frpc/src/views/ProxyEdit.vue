@@ -24,7 +24,7 @@
         label-position="top"
         @submit.prevent
       >
-        <ProxyFormLayout v-model="form" :editing="isEditing" :used-ports="usedPorts" />
+        <ProxyFormLayout v-model="form" :editing="isEditing" :used-ports="usedPorts" :used-ports-error="usedPortsError" />
       </el-form>
     </div>
 
@@ -76,6 +76,7 @@ const dirty = ref(false)
 const formSaved = ref(false)
 const trackChanges = ref(false)
 const usedPorts = ref<number[]>([])
+const usedPortsError = ref(false)
 
 const rules: FormRules = {
   name: [
@@ -193,9 +194,10 @@ const loadUsedPorts = async () => {
   try {
     const res = await getProfileUsedPorts(profileName.value)
     usedPorts.value = [...(res.tcp || []), ...(res.udp || [])]
+    usedPortsError.value = false
   } catch {
-    // Dashboard not configured or unreachable, ignore silently
     usedPorts.value = []
+    usedPortsError.value = true
   }
 }
 

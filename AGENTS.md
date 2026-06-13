@@ -37,3 +37,12 @@
 
 Operational procedures for agents are in `doc/agents/`:
 - `doc/agents/release.md` - Release process
+
+## Documentation Rule
+
+After every bug fix or feature change, append a brief summary (in Chinese) to the relevant section in `doc/USAGE.MD`. Include:
+- What the issue was
+- Root cause
+- How it was fixed
+
+This keeps the usage doc up to date with known issues and their resolutions.

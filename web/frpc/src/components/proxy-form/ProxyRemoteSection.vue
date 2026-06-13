@@ -5,6 +5,13 @@
         :min="0" :max="65535" prop="remotePort" tip="Use 0 for random port assignment" :readonly="readonly" />
       <div></div>
     </div>
+    <div v-if="!isEdit && usedPortsError" class="used-ports-hint">
+      <el-alert title="Unable to load used ports from frps dashboard" type="warning" :closable="false" show-icon>
+        <template #default>
+          <p>Make sure the frps dashboard address, username, and password are correctly configured in the profile settings.</p>
+        </template>
+      </el-alert>
+    </div>
     <div v-if="usedPorts && usedPorts.length > 0" class="used-ports-section">
       <div class="used-ports-label">Used Ports on Server:</div>
       <div class="used-ports-list">
@@ -38,7 +45,10 @@ const props = withDefaults(defineProps<{
   modelValue: ProxyFormData
   readonly?: boolean
   usedPorts?: number[]
-}>(), { readonly: false, usedPorts: () => [] })
+  usedPortsError?: boolean
+}>(), { readonly: false, usedPorts: () => [], usedPortsError: false })
+
+const isEdit = computed(() => !!props.modelValue.name)
 
 const emit = defineEmits<{ 'update:modelValue': [value: ProxyFormData] }>()
 
@@ -83,6 +93,10 @@ const portConflict = computed(() => {
 }
 
 .port-conflict-warning {
+  margin-top: 8px;
+}
+
+.used-ports-hint {
   margin-top: 8px;
 }
 </style>

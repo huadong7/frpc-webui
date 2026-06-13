@@ -83,7 +83,7 @@
       </ConfigSection>
 
       <!-- Frps Dashboard -->
-      <ConfigSection title="Frps Dashboard (Optional)" :expanded="false">
+      <ConfigSection v-if="form.dashboard" title="Frps Dashboard (Optional)" :expanded="false">
         <el-form-item label="Dashboard Address">
           <el-input v-model="form.dashboard.addr" placeholder="e.g., http://192.168.1.100:7500" />
           <span class="form-tip">Used to query port usage from frps server</span>
@@ -122,6 +122,8 @@ const isEdit = computed(() => !!route.params.name)
 const profileName = computed(() => route.params.name as string | undefined)
 const saving = ref(false)
 const formRef = ref()
+const existingProxies = ref<any[]>([])
+const existingVisitors = ref<any[]>([])
 
 const defaultForm = (): ProfileConfig => ({
   name: '',
@@ -154,6 +156,8 @@ onMounted(async () => {
     try {
       const detail = await profileStore.getProfileDetail(profileName.value)
       Object.assign(form, detail.config)
+      existingProxies.value = detail.proxies || []
+      existingVisitors.value = detail.visitors || []
     } catch (err: any) {
       ElMessage.error('Failed to load profile: ' + (err.message || 'Unknown error'))
       router.replace('/profiles')
@@ -169,8 +173,8 @@ const handleSave = async () => {
   try {
     const entry: ProfileEntry = {
       config: { ...form },
-      proxies: [],
-      visitors: [],
+      proxies: isEdit.value && profileName.value ? existingProxies.value : [],
+      visitors: isEdit.value && profileName.value ? existingVisitors.value : [],
     }
 
     if (isEdit.value && profileName.value) {
