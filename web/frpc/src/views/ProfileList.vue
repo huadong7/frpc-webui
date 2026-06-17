@@ -115,6 +115,7 @@ onMounted(() => {
   padding: $spacing-xl 40px;
   max-width: 960px;
   margin: 0 auto;
+  @include page-transition;
 }
 
 .page-header {
@@ -122,6 +123,10 @@ onMounted(() => {
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: $spacing-xl;
+
+  .page-title {
+    @include gradient-text;
+  }
 }
 
 .profile-list {
@@ -131,9 +136,15 @@ onMounted(() => {
 }
 
 .profile-card {
-  border: 1px solid $color-border-light;
+  @include glass-panel;
   border-radius: $radius-md;
   overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    @include glow-border;
+  }
 }
 
 .card-main {
@@ -142,11 +153,6 @@ onMounted(() => {
   justify-content: space-between;
   padding: $spacing-lg;
   cursor: pointer;
-  transition: background $transition-fast;
-
-  &:hover {
-    background: $color-bg-hover;
-  }
 }
 
 .card-info {
@@ -159,11 +165,17 @@ onMounted(() => {
   font-weight: $font-weight-semibold;
   font-size: $font-size-md;
   color: $color-text-primary;
+  transition: color 0.2s ease;
+
+  .profile-card:hover & {
+    color: $accent-cyan;
+  }
 }
 
 .profile-server {
   font-size: $font-size-sm;
   color: $color-text-muted;
+  font-family: ui-monospace, monospace;
 }
 
 .card-actions {
@@ -173,8 +185,10 @@ onMounted(() => {
 }
 
 .empty-state {
+  @include glass-panel;
   text-align: center;
   padding: 60px $spacing-xl;
+  border-radius: $radius-md;
 }
 
 .empty-text {

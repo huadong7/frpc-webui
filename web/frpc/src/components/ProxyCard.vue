@@ -103,20 +103,23 @@ const statusClass = computed(() => {
 
 <style scoped lang="scss">
 .proxy-card {
-  background: $color-bg-primary;
-  border: 1px solid $color-border-lighter;
+  @include glass-panel;
   border-radius: $radius-md;
   padding: 14px 20px;
   cursor: pointer;
-  transition: all $transition-medium;
+  transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    border-color: $color-border;
+    transform: translateY(-2px);
+    @include glow-border;
   }
 
   &.has-error {
-    border-color: rgba(245, 108, 108, 0.3);
+    border-color: rgba(255, 68, 102, 0.25);
+
+    &:hover {
+      box-shadow: 0 0 16px rgba(255, 68, 102, 0.15);
+    }
   }
 }
 
@@ -144,6 +147,11 @@ const statusClass = computed(() => {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: $color-text-primary;
+  transition: color 0.2s ease;
+
+  .proxy-card:hover & {
+    color: $accent-cyan;
+  }
 }
 
 .type-tag {
@@ -151,8 +159,15 @@ const statusClass = computed(() => {
   font-weight: $font-weight-medium;
   padding: 2px 8px;
   border-radius: 4px;
-  background: $color-bg-muted;
-  color: $color-text-secondary;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  color: $accent-cyan;
+  transition: all 0.2s ease;
+
+  .proxy-card:hover & {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.25);
+  }
 }
 
 .card-address {
@@ -164,8 +179,6 @@ const statusClass = computed(() => {
   gap: $spacing-sm;
 }
 
-
-
 .card-right {
   display: flex;
   align-items: center;
@@ -176,17 +189,18 @@ const statusClass = computed(() => {
 .source-label {
   font-size: $font-size-xs;
   color: $color-text-light;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 212, 255, 0.04);
 }
-
 
 .status-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: currentColor;
+  box-shadow: 0 0 6px currentColor;
 }
-
-
 
 @include mobile {
   .card-main {

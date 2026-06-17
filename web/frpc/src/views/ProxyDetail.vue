@@ -167,6 +167,7 @@ const handleEdit = () => {
   height: 100%;
   max-width: 960px;
   margin: 0 auto;
+  @include page-transition;
 }
 
 .detail-top {
@@ -191,14 +192,15 @@ const handleEdit = () => {
 .breadcrumb-link {
   color: $color-text-secondary;
   text-decoration: none;
+  transition: color 0.2s ease;
 
   &:hover {
-    color: $color-text-primary;
+    color: $accent-cyan;
   }
 }
 
 .breadcrumb-sep {
-  color: $color-text-light;
+  color: rgba(0, 212, 255, 0.3);
 }
 
 .breadcrumb-current {
@@ -224,7 +226,7 @@ const handleEdit = () => {
   margin: 0;
   font-size: 22px;
   font-weight: $font-weight-semibold;
-  color: $color-text-primary;
+  @include gradient-text;
 }
 
 .header-subtitle {
@@ -239,17 +241,18 @@ const handleEdit = () => {
 }
 
 .error-banner {
+  @include glass-panel;
   display: flex;
   align-items: flex-start;
   gap: $spacing-sm;
   padding: 12px 16px;
-  background: var(--color-danger-light);
-  border: 1px solid rgba(245, 108, 108, 0.2);
+  background: rgba(255, 68, 102, 0.06);
+  border-left: 3px solid #ff4466;
   border-radius: $radius-md;
   margin-bottom: $spacing-xl;
 
   .error-icon {
-    color: $color-danger;
+    color: #ff4466;
     font-size: 18px;
     margin-top: 2px;
   }
@@ -257,7 +260,7 @@ const handleEdit = () => {
   .error-title {
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
-    color: $color-danger;
+    color: #ff4466;
     margin-bottom: 2px;
   }
 
@@ -269,14 +272,16 @@ const handleEdit = () => {
 
 .not-found,
 .loading-area {
+  @include glass-panel;
   text-align: center;
   padding: 60px $spacing-xl;
+  border-radius: $radius-md;
 }
 
 .empty-text {
   font-size: $font-size-lg;
   font-weight: $font-weight-medium;
-  color: $color-text-secondary;
+  @include gradient-text;
   margin: 0 0 $spacing-xs;
 }
 

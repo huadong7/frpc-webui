@@ -8,8 +8,8 @@
 
   /* Background colors */
   --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f9f9f9;
-  --color-bg-tertiary: #fafafa;
+  --color-bg-secondary: #f8f9fc;
+  --color-bg-tertiary: #f0f2f5;
   --color-bg-surface: #ffffff;
   --color-bg-muted: #f4f4f5;
   --color-bg-input: #ffffff;
@@ -23,11 +23,11 @@
   --color-border-extra-light: #f2f6fc;
 
   /* Status colors */
-  --color-primary: #409eff;
+  --color-primary: #0066cc;
   --color-primary-light: #ecf5ff;
-  --color-success: #67c23a;
+  --color-success: #34a853;
   --color-warning: #e6a23c;
-  --color-danger: #f56c6c;
+  --color-danger: #ea4335;
   --color-danger-dark: #c45656;
   --color-danger-light: #fef0f0;
   --color-info: #909399;
@@ -35,6 +35,23 @@
   /* Button colors */
   --color-btn-primary: #303133;
   --color-btn-primary-hover: #4a4d5c;
+
+  /* Accent colors */
+  --color-accent-cyan: #0088cc;
+  --color-accent-cyan-light: rgba(0, 136, 204, 0.1);
+  --color-accent-purple: #7c3aed;
+  --color-accent-purple-light: rgba(124, 58, 237, 0.1);
+  --color-accent-glow: rgba(0, 136, 204, 0.3);
+
+  /* Glass morphism */
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-blur: blur(16px);
+
+  /* Glowing shadows */
+  --glow-sm: none;
+  --glow-md: none;
+  --glow-lg: none;
 
   /* Element Plus mapping */
   --el-color-primary: var(--color-primary);
@@ -75,43 +92,65 @@
 
 html.dark {
   /* Text colors */
-  --color-text-primary: #e5e7eb;
-  --color-text-secondary: #b0b0b0;
-  --color-text-muted: #888888;
-  --color-text-light: #666666;
-  --color-text-placeholder: #afafaf;
+  --color-text-primary: #e8eaed;
+  --color-text-secondary: #9aa0a6;
+  --color-text-muted: #6b7280;
+  --color-text-light: #4b5563;
+  --color-text-placeholder: #6b7280;
 
-  /* Background colors */
-  --color-bg-primary: #212121;
-  --color-bg-secondary: #181818;
-  --color-bg-tertiary: #303030;
-  --color-bg-surface: #303030;
-  --color-bg-muted: #303030;
-  --color-bg-input: #2f2f2f;
-  --color-bg-hover: #3a3a3a;
-  --color-bg-active: #454545;
+  /* Background colors - deep dark cyber-tech */
+  --color-bg-primary: #0f1019;
+  --color-bg-secondary: #0a0b12;
+  --color-bg-tertiary: #161825;
+  --color-bg-surface: #1a1c2e;
+  --color-bg-muted: #1e2035;
+  --color-bg-input: #141622;
+  --color-bg-hover: #1e2040;
+  --color-bg-active: #252850;
 
   /* Border colors */
-  --color-border: #404040;
-  --color-border-light: #353535;
-  --color-border-lighter: #2a2a2a;
-  --color-border-extra-light: #222222;
+  --color-border: rgba(0, 212, 255, 0.12);
+  --color-border-light: rgba(0, 212, 255, 0.08);
+  --color-border-lighter: rgba(0, 212, 255, 0.05);
+  --color-border-extra-light: rgba(0, 212, 255, 0.03);
 
-  /* Status colors */
-  --color-primary: #409eff;
-  --color-danger: #f87171;
-  --color-danger-dark: #f87171;
-  --color-danger-light: #3d2027;
-  --color-info: #888888;
+  /* Status colors - neon */
+  --color-primary: #00d4ff;
+  --color-primary-light: rgba(0, 212, 255, 0.15);
+  --color-success: #00ff88;
+  --color-success-light: rgba(0, 255, 136, 0.15);
+  --color-warning: #ffaa00;
+  --color-warning-light: rgba(255, 170, 0, 0.15);
+  --color-danger: #ff4466;
+  --color-danger-dark: #ff4466;
+  --color-danger-light: rgba(255, 68, 102, 0.15);
+  --color-info: #6b7280;
 
   /* Button colors */
-  --color-btn-primary: #404040;
-  --color-btn-primary-hover: #505050;
+  --color-btn-primary: #00d4ff;
+  --color-btn-primary-hover: #33ddff;
+
+  /* Accent colors */
+  --color-accent-cyan: #00d4ff;
+  --color-accent-cyan-light: rgba(0, 212, 255, 0.12);
+  --color-accent-purple: #a855f7;
+  --color-accent-purple-light: rgba(168, 85, 247, 0.12);
+  --color-accent-glow: rgba(0, 212, 255, 0.4);
+
+  /* Glass morphism */
+  --glass-bg: rgba(15, 16, 25, 0.85);
+  --glass-border: rgba(0, 212, 255, 0.1);
+  --glass-blur: blur(20px);
+
+  /* Glowing shadows */
+  --glow-sm: 0 0 8px rgba(0, 212, 255, 0.25);
+  --glow-md: 0 0 16px rgba(0, 212, 255, 0.35);
+  --glow-lg: 0 0 32px rgba(0, 212, 255, 0.45);
 
   /* Dark overrides */
   --el-text-color-regular: var(--color-text-primary);
   --el-overlay-color: rgba(0, 0, 0, 0.7);
 
-  background-color: #181818;
+  background-color: #0a0b12;
   color-scheme: dark;
 }

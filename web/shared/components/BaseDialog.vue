@@ -67,7 +67,9 @@ const dialogTop = computed(() => {
 
 <style lang="scss">
 .base-dialog.el-dialog {
-  border-radius: 16px;
+  @include glass-panel;
+  border-radius: $radius-xl;
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.3);
 
   .el-dialog__header {
     display: flex;
@@ -85,13 +87,19 @@ const dialogTop = computed(() => {
       left: 8px;
       right: 8px;
       height: 1px;
-      background: $color-border-lighter;
+      background: linear-gradient(90deg,
+        transparent,
+        $accent-cyan,
+        transparent
+      );
+      opacity: 0.3;
     }
   }
 
   .el-dialog__title {
     font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
+    @include gradient-text;
   }
 
   .el-dialog__body {
@@ -104,10 +112,11 @@ const dialogTop = computed(() => {
     height: 32px;
     @include flex-center;
     border-radius: $radius-sm;
-    transition: background $transition-fast;
+    transition: all $transition-fast;
 
     &:hover {
-      background: $color-bg-hover;
+      background: rgba(0, 212, 255, 0.08);
+      color: $accent-cyan;
     }
   }
 
@@ -125,6 +134,7 @@ const dialogTop = computed(() => {
     max-height: 100dvh;
     display: flex;
     flex-direction: column;
+    backdrop-filter: none;
 
     .el-dialog__body {
       flex: 1;

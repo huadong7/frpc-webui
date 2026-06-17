@@ -186,6 +186,7 @@ onMounted(() => {
   padding: $spacing-xl 40px;
   max-width: 960px;
   margin: 0 auto;
+  @include page-transition;
 }
 
 .page-header {
@@ -193,13 +194,17 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   margin-bottom: $spacing-xl;
+
+  .page-title {
+    @include gradient-text;
+  }
 }
 
 .tab-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid $color-border-lighter;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.06);
   margin-bottom: $spacing-xl;
 }
 
@@ -215,16 +220,17 @@ onMounted(() => {
   color: $color-text-muted;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: all $transition-fast;
+  transition: all 0.2s ease;
 
   &:hover {
     color: $color-text-primary;
   }
 
   &.active {
-    color: $color-text-primary;
-    border-bottom-color: $color-text-primary;
+    color: $accent-cyan;
+    border-bottom-color: $accent-cyan;
     font-weight: $font-weight-medium;
+    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.2);
   }
 }
 
@@ -253,19 +259,18 @@ onMounted(() => {
 }
 
 .visitor-card {
+  @include glass-panel;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: $color-bg-primary;
-  border: 1px solid $color-border-lighter;
   border-radius: $radius-md;
   padding: 14px 20px;
   cursor: pointer;
-  transition: all $transition-medium;
+  transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    border-color: $color-border;
+    transform: translateY(-2px);
+    @include glow-border;
   }
 }
 
@@ -286,6 +291,11 @@ onMounted(() => {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   color: $color-text-primary;
+  transition: color 0.2s ease;
+
+  .visitor-card:hover & {
+    color: $accent-cyan;
+  }
 }
 
 .type-tag {
@@ -293,8 +303,15 @@ onMounted(() => {
   font-weight: $font-weight-medium;
   padding: 2px 8px;
   border-radius: 4px;
-  background: $color-bg-muted;
-  color: $color-text-secondary;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  color: $accent-cyan;
+  transition: all 0.2s ease;
+
+  .visitor-card:hover & {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.25);
+  }
 }
 
 .card-meta {
@@ -309,27 +326,32 @@ onMounted(() => {
   flex-shrink: 0;
 }
 
-
-
 .store-disabled {
+  @include glass-panel;
   padding: 32px;
   text-align: center;
   color: $color-text-muted;
+  border-radius: $radius-md;
 }
 
 .config-hint {
   display: inline-block;
   text-align: left;
-  background: $color-bg-hover;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.1);
   padding: 12px 20px;
   border-radius: $radius-sm;
   font-size: $font-size-sm;
+  font-family: ui-monospace, monospace;
   margin-top: $spacing-md;
+  color: $accent-cyan;
 }
 
 .empty-state {
+  @include glass-panel;
   text-align: center;
   padding: 60px $spacing-xl;
+  border-radius: $radius-md;
 }
 
 .empty-text {
