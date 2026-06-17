@@ -89,7 +89,7 @@ const portConflict = computed(() => {
 }
 
 .port-tag {
-  font-family: monospace;
+  font-size: var(--el-font-size-base);
 }
 
 .port-conflict-warning {

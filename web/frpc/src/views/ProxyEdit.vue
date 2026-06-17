@@ -193,7 +193,7 @@ const loadUsedPorts = async () => {
   if (!isProfileScoped.value || !profileName.value) return
   try {
     const res = await getProfileUsedPorts(profileName.value)
-    usedPorts.value = [...(res.tcp || []), ...(res.udp || [])]
+    usedPorts.value = [...(res.tcp || []), ...(res.udp || [])].sort((a, b) => a - b)
     usedPortsError.value = false
   } catch {
     usedPorts.value = []
@@ -276,6 +276,7 @@ watch(
   height: 100%;
   max-width: 960px;
   margin: 0 auto;
+  @include page-transition;
 }
 
 /* Edit Header */
@@ -307,21 +308,21 @@ watch(
 }
 
 .breadcrumb-item {
-  color: var(--text-secondary);
+  color: $color-text-secondary;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
 
 .breadcrumb-item:hover {
-  color: var(--el-color-primary);
+  color: $accent-cyan;
 }
 
 .breadcrumb-separator {
-  color: var(--el-border-color);
+  color: rgba(0, 212, 255, 0.3);
 }
 
 .breadcrumb-current {
-  color: var(--text-primary);
+  @include gradient-text;
   font-weight: 500;
 }
 
