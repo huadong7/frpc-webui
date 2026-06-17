@@ -5,6 +5,13 @@
       <div class="glow-orb orb-1"></div>
       <div class="glow-orb orb-2"></div>
       <div class="scan-line"></div>
+      <div class="mouse-glow" ref="mouseGlowRef"></div>
+      <div class="color-spots">
+        <div class="color-spot spot-1"></div>
+        <div class="color-spot spot-2"></div>
+        <div class="color-spot spot-3"></div>
+        <div class="color-spot spot-4"></div>
+      </div>
     </div>
 
     <header class="header">
@@ -17,8 +24,8 @@
             <LogoIcon class="logo-icon" />
           </div>
           <span class="divider">/</span>
-          <span class="brand-name">frp</span>
-          <span class="badge">Client</span>
+          <span class="brand-name cyber-glow-text">frp</span>
+          <span class="badge cyber-glow-text">Client</span>
         </div>
 
         <div class="header-controls">
@@ -105,10 +112,14 @@ import { Moon, Sunny } from '@element-plus/icons-vue'
 import GitHubIcon from './assets/icons/github.svg?component'
 import LogoIcon from './assets/icons/logo.svg?component'
 import { useResponsive } from './composables/useResponsive'
+import { useCyberEffects } from './composables/useCyberEffects'
 
 const route = useRoute()
 const isDark = useDark()
 const { isMobile } = useResponsive()
+const { mouseGlowRef } = useCyberEffects(isDark)
+
+defineExpose({ mouseGlowRef })
 
 const sidebarOpen = ref(false)
 
@@ -229,6 +240,112 @@ html, body {
   opacity: 0.25;
 }
 
+// Mouse glow effect
+.mouse-glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 0.06) 0%,
+    rgba(168, 85, 247, 0.03) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+  will-change: transform;
+}
+
+.cyber-background.dark-mode .mouse-glow {
+  opacity: 1;
+}
+
+.mouse-glow.active {
+  opacity: 1;
+}
+
+// Color spots
+.color-spots {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.color-spot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  will-change: transform;
+}
+
+.cyber-background.dark-mode .color-spot {
+  opacity: 0.5;
+}
+
+.spot-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.08), transparent);
+  top: 10%;
+  left: 60%;
+  animation: spot-drift-1 25s ease-in-out infinite;
+}
+
+.spot-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent);
+  top: 50%;
+  left: 20%;
+  animation: spot-drift-2 30s ease-in-out infinite;
+}
+
+.spot-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.05), transparent);
+  top: 70%;
+  left: 75%;
+  animation: spot-drift-3 22s ease-in-out infinite;
+}
+
+.spot-4 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 170, 0, 0.04), transparent);
+  top: 20%;
+  left: 10%;
+  animation: spot-drift-4 28s ease-in-out infinite;
+}
+
+@keyframes spot-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-80px, 60px) scale(1.1); }
+  66% { transform: translate(40px, -40px) scale(0.9); }
+}
+
+@keyframes spot-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -80px) scale(0.95); }
+  66% { transform: translate(-50px, 30px) scale(1.05); }
+}
+
+@keyframes spot-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-60px, -50px) scale(1.08); }
+}
+
+@keyframes spot-drift-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(70px, 40px) scale(0.92); }
+}
+
 @keyframes grid-scroll {
   from { background-position: 0 0; }
   to { background-position: 40px 40px; }
@@ -311,6 +428,37 @@ html, body {
   font-weight: $font-weight-semibold;
   font-size: $font-size-xl;
   letter-spacing: -0.5px;
+}
+
+// Cyber glow text effect
+.cyber-glow-text {
+  position: relative;
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+  cursor: default;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 212, 255, 0.08),
+      transparent 70%
+    );
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    text-shadow: 0 0 12px rgba(0, 212, 255, 0.5),
+                 0 0 24px rgba(0, 212, 255, 0.2);
+
+    &::before {
+      opacity: 1;
+    }
+  }
 }
 
 .badge {
