@@ -406,7 +406,6 @@ onMounted(() => {
   height: 100%;
   max-width: 960px;
   margin: 0 auto;
-  @include page-transition;
 }
 
 .page-top {
@@ -425,17 +424,13 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   margin-bottom: $spacing-xl;
-
-  .page-title {
-    @include gradient-text;
-  }
 }
 
 .tab-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.06);
+  border-bottom: 1px solid $color-border-lighter;
   margin-bottom: $spacing-xl;
 }
 
@@ -457,17 +452,13 @@ onMounted(() => {
   color: $color-text-muted;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: all 0.2s ease;
+  transition: all $transition-fast;
 
-  &:hover {
-    color: $color-text-primary;
-  }
-
+  &:hover { color: $color-text-primary; }
   &.active {
-    color: $accent-cyan;
-    border-bottom-color: $accent-cyan;
+    color: $color-text-primary;
+    border-bottom-color: $color-text-primary;
     font-weight: $font-weight-medium;
-    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.2);
   }
 }
 
@@ -491,10 +482,8 @@ onMounted(() => {
 }
 
 .empty-state {
-  @include glass-panel;
   text-align: center;
   padding: 60px $spacing-xl;
-  border-radius: $radius-md;
 }
 
 .empty-text {
@@ -511,24 +500,19 @@ onMounted(() => {
 }
 
 .store-disabled {
-  @include glass-panel;
   padding: 32px;
   text-align: center;
   color: $color-text-muted;
-  border-radius: $radius-md;
 }
 
 .config-hint {
   display: inline-block;
   text-align: left;
-  background: rgba(0, 212, 255, 0.05);
-  border: 1px solid rgba(0, 212, 255, 0.1);
+  background: $color-bg-hover;
   padding: 12px 20px;
   border-radius: $radius-sm;
   font-size: $font-size-sm;
-  font-family: ui-monospace, monospace;
   margin-top: $spacing-md;
-  color: $accent-cyan;
 }
 
 @include mobile {

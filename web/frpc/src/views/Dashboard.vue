@@ -127,15 +127,10 @@ onMounted(() => {
   padding: $spacing-xl 40px;
   max-width: 960px;
   margin: 0 auto;
-  @include page-transition;
 }
 
 .page-header {
   margin-bottom: 32px;
-
-  .page-title {
-    @include gradient-text;
-  }
 }
 
 .getting-started {
@@ -145,16 +140,16 @@ onMounted(() => {
 }
 
 .start-card {
-  @include glass-panel;
   text-align: center;
   padding: 48px;
-  border-radius: $radius-lg;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-md;
   max-width: 480px;
 
   h3 {
     margin: 0 0 $spacing-md;
     font-size: $font-size-xl;
-    @include gradient-text;
+    color: $color-text-primary;
   }
 
   p {
@@ -183,15 +178,15 @@ onMounted(() => {
 }
 
 .profile-card {
-  @include glass-panel;
+  border: 1px solid $color-border-light;
   border-radius: $radius-md;
   padding: $spacing-lg;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
 
   &:hover {
-    transform: translateY(-2px);
-    @include glow-border;
+    border-color: $color-border;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -206,11 +201,6 @@ onMounted(() => {
   font-weight: $font-weight-semibold;
   font-size: $font-size-md;
   color: $color-text-primary;
-  transition: color 0.2s ease;
-
-  .profile-card:hover & {
-    color: $accent-cyan;
-  }
 }
 
 .profile-card-body {
@@ -218,14 +208,13 @@ onMounted(() => {
 }
 
 .profile-error {
-  color: #ff4466;
+  color: #f56c6c;
   font-size: $font-size-sm;
 }
 
 .profile-runid {
   color: $color-text-muted;
   font-size: $font-size-xs;
-  font-family: ui-monospace, monospace;
 }
 
 .profile-card-actions {
@@ -250,28 +239,22 @@ onMounted(() => {
 }
 
 .link-card {
-  @include glass-panel;
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: $spacing-lg;
+  border: 1px solid $color-border-light;
   border-radius: $radius-md;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: border-color $transition-fast;
 
   &:hover {
-    transform: translateY(-2px);
-    @include glow-border;
+    border-color: $color-border;
   }
 
   .link-title {
     font-weight: $font-weight-medium;
     color: $color-text-primary;
-    transition: color 0.2s ease;
-  }
-
-  &:hover .link-title {
-    color: $accent-cyan;
   }
 
   .link-desc {

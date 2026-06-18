@@ -276,7 +276,7 @@ watch(
   height: 100%;
   max-width: 960px;
   margin: 0 auto;
-  @include page-transition;
+  opacity: 1;
 }
 
 /* Edit Header */
@@ -314,7 +314,7 @@ watch(
 }
 
 .breadcrumb-item:hover {
-  color: $accent-cyan;
+  color: var(--color-primary);
 }
 
 .breadcrumb-separator {
@@ -322,8 +322,8 @@ watch(
 }
 
 .breadcrumb-current {
-  @include gradient-text;
   font-weight: 500;
+  color: var(--color-text-primary);
 }
 
 /* Responsive */

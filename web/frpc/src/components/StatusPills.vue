@@ -50,48 +50,40 @@ const pills = computed(() => {
 }
 
 .pill {
-  border: 1px solid transparent;
+  border: none;
   border-radius: 12px;
   padding: $spacing-xs $spacing-md;
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
   cursor: pointer;
-  background: rgba(0, 212, 255, 0.04);
+  background: $color-bg-muted;
   color: $color-text-secondary;
-  transition: all 0.2s ease;
+  transition: all $transition-fast;
   white-space: nowrap;
 
   &:hover {
-    border-color: rgba(0, 212, 255, 0.15);
+    opacity: 0.85;
   }
 
   &.active {
     &.all {
-      background: rgba(0, 212, 255, 0.08);
-      color: $accent-cyan;
-      border-color: rgba(0, 212, 255, 0.2);
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.15);
+      background: $color-bg-muted;
+      color: $color-text-secondary;
     }
 
     &.running {
-      background: rgba(0, 255, 136, 0.08);
-      color: #00ff88;
-      border-color: rgba(0, 255, 136, 0.2);
-      box-shadow: 0 0 8px rgba(0, 255, 136, 0.15);
+      background: rgba(103, 194, 58, 0.1);
+      color: #67c23a;
     }
 
     &.error {
-      background: rgba(255, 68, 102, 0.08);
-      color: #ff4466;
-      border-color: rgba(255, 68, 102, 0.2);
-      box-shadow: 0 0 8px rgba(255, 68, 102, 0.15);
+      background: rgba(245, 108, 108, 0.1);
+      color: #f56c6c;
     }
 
     &.waiting {
-      background: rgba(255, 170, 0, 0.08);
-      color: #ffaa00;
-      border-color: rgba(255, 170, 0, 0.2);
-      box-shadow: 0 0 8px rgba(255, 170, 0, 0.15);
+      background: rgba(230, 162, 60, 0.1);
+      color: #e6a23c;
     }
   }
 }

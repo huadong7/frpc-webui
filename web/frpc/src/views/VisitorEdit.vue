@@ -229,7 +229,6 @@ watch(
   height: 100%;
   max-width: 960px;
   margin: 0 auto;
-  @include page-transition;
 }
 
 /* Header */
@@ -266,21 +265,21 @@ watch(
 }
 
 .breadcrumb-item {
-  color: $color-text-secondary;
+  color: var(--text-secondary);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
 }
 
 .breadcrumb-item:hover {
-  color: $accent-cyan;
+  color: var(--el-color-primary);
 }
 
 .breadcrumb-separator {
-  color: rgba(0, 212, 255, 0.3);
+  color: var(--el-border-color);
 }
 
 .breadcrumb-current {
-  @include gradient-text;
+  color: var(--text-primary);
   font-weight: 500;
 }
 

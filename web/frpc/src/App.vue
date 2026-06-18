@@ -1,19 +1,5 @@
 <template>
   <div id="app">
-    <div class="cyber-background" :class="{ 'dark-mode': isDark }">
-      <div class="grid-pattern"></div>
-      <div class="glow-orb orb-1"></div>
-      <div class="glow-orb orb-2"></div>
-      <div class="scan-line"></div>
-      <div class="mouse-glow" ref="mouseGlowRef"></div>
-      <div class="color-spots">
-        <div class="color-spot spot-1"></div>
-        <div class="color-spot spot-2"></div>
-        <div class="color-spot spot-3"></div>
-        <div class="color-spot spot-4"></div>
-      </div>
-    </div>
-
     <header class="header">
       <div class="header-content">
         <div class="brand-section">
@@ -24,8 +10,8 @@
             <LogoIcon class="logo-icon" />
           </div>
           <span class="divider">/</span>
-          <span class="brand-name cyber-glow-text">frp</span>
-          <span class="badge cyber-glow-text">Client</span>
+          <span class="brand-name">frp</span>
+          <span class="badge">Client</span>
         </div>
 
         <div class="header-controls">
@@ -94,11 +80,7 @@
       </aside>
 
       <main id="content">
-        <router-view v-slot="{ Component }">
-          <transition name="page" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+        <router-view></router-view>
       </main>
     </div>
   </div>
@@ -112,14 +94,10 @@ import { Moon, Sunny } from '@element-plus/icons-vue'
 import GitHubIcon from './assets/icons/github.svg?component'
 import LogoIcon from './assets/icons/logo.svg?component'
 import { useResponsive } from './composables/useResponsive'
-import { useCyberEffects } from './composables/useCyberEffects'
 
 const route = useRoute()
 const isDark = useDark()
 const { isMobile } = useResponsive()
-const { mouseGlowRef } = useCyberEffects(isDark)
-
-defineExpose({ mouseGlowRef })
 
 const sidebarOpen = ref(false)
 
@@ -131,6 +109,7 @@ const closeSidebar = () => {
   sidebarOpen.value = false
 }
 
+// Auto-close sidebar on route change
 watch(() => route.path, () => {
   if (isMobile.value) {
     closeSidebar()
@@ -163,234 +142,14 @@ html, body {
   display: flex;
   flex-direction: column;
   background-color: $color-bg-secondary;
-  position: relative;
-}
-
-// Background effects
-.cyber-background {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.grid-pattern {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  animation: grid-scroll 30s linear infinite;
-}
-
-.cyber-background.dark-mode .grid-pattern {
-  opacity: 1;
-}
-
-.glow-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-
-  &.orb-1 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(0, 212, 255, 0.12), transparent);
-    top: -100px;
-    right: -100px;
-    animation: float-1 15s ease-in-out infinite;
-  }
-
-  &.orb-2 {
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.08), transparent);
-    bottom: -50px;
-    left: -50px;
-    animation: float-2 20s ease-in-out infinite;
-  }
-}
-
-.cyber-background.dark-mode .glow-orb {
-  opacity: 0.7;
-}
-
-.scan-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(0, 212, 255, 0.4),
-    transparent
-  );
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  animation: scan 8s linear infinite;
-}
-
-.cyber-background.dark-mode .scan-line {
-  opacity: 0.25;
-}
-
-// Mouse glow effect
-.mouse-glow {
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 212, 255, 0.06) 0%,
-    rgba(168, 85, 247, 0.03) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 0;
-  will-change: transform;
-}
-
-.cyber-background.dark-mode .mouse-glow {
-  opacity: 1;
-}
-
-.mouse-glow.active {
-  opacity: 1;
-}
-
-// Color spots
-.color-spots {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.color-spot {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  will-change: transform;
-}
-
-.cyber-background.dark-mode .color-spot {
-  opacity: 0.5;
-}
-
-.spot-1 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.08), transparent);
-  top: 10%;
-  left: 60%;
-  animation: spot-drift-1 25s ease-in-out infinite;
-}
-
-.spot-2 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent);
-  top: 50%;
-  left: 20%;
-  animation: spot-drift-2 30s ease-in-out infinite;
-}
-
-.spot-3 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(0, 255, 136, 0.05), transparent);
-  top: 70%;
-  left: 75%;
-  animation: spot-drift-3 22s ease-in-out infinite;
-}
-
-.spot-4 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 170, 0, 0.04), transparent);
-  top: 20%;
-  left: 10%;
-  animation: spot-drift-4 28s ease-in-out infinite;
-}
-
-@keyframes spot-drift-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-80px, 60px) scale(1.1); }
-  66% { transform: translate(40px, -40px) scale(0.9); }
-}
-
-@keyframes spot-drift-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(60px, -80px) scale(0.95); }
-  66% { transform: translate(-50px, 30px) scale(1.05); }
-}
-
-@keyframes spot-drift-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-60px, -50px) scale(1.08); }
-}
-
-@keyframes spot-drift-4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(70px, 40px) scale(0.92); }
-}
-
-@keyframes grid-scroll {
-  from { background-position: 0 0; }
-  to { background-position: 40px 40px; }
-}
-
-@keyframes float-1 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-30px, 30px); }
-}
-
-@keyframes float-2 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(20px, -20px); }
-}
-
-@keyframes scan {
-  0% { top: -2px; }
-  100% { top: 100%; }
 }
 
 // Header
 .header {
   flex-shrink: 0;
-  background: $glass-bg;
-  backdrop-filter: $glass-blur;
-  -webkit-backdrop-filter: $glass-blur;
+  background: $color-bg-primary;
+  border-bottom: 1px solid $color-border-light;
   height: $header-height;
-  position: relative;
-  z-index: 10;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent,
-      $accent-cyan,
-      $accent-purple,
-      transparent
-    );
-    opacity: 0.4;
-  }
 }
 
 .header-content {
@@ -418,55 +177,23 @@ html, body {
 }
 
 .divider {
-  color: rgba(0, 212, 255, 0.3);
+  color: $color-border;
   font-size: 22px;
   font-weight: 200;
 }
 
 .brand-name {
-  @include gradient-text;
   font-weight: $font-weight-semibold;
   font-size: $font-size-xl;
+  color: $color-text-primary;
   letter-spacing: -0.5px;
-}
-
-// Cyber glow text effect
-.cyber-glow-text {
-  position: relative;
-  transition: text-shadow 0.3s ease, color 0.3s ease;
-  cursor: default;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(0, 212, 255, 0.08),
-      transparent 70%
-    );
-    border-radius: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  &:hover {
-    text-shadow: 0 0 12px rgba(0, 212, 255, 0.5),
-                 0 0 24px rgba(0, 212, 255, 0.2);
-
-    &::before {
-      opacity: 1;
-    }
-  }
 }
 
 .badge {
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
-  color: $accent-cyan;
-  background: var(--color-accent-cyan-light);
-  border: 1px solid rgba(0, 212, 255, 0.15);
+  color: $color-text-muted;
+  background: $color-bg-muted;
   padding: 2px 8px;
   border-radius: 4px;
 }
@@ -487,7 +214,7 @@ html, body {
 
   &:hover {
     background: $color-bg-hover;
-    color: $accent-cyan;
+    color: $color-text-primary;
   }
 }
 
@@ -497,14 +224,13 @@ html, body {
 }
 
 .theme-switch {
-  --el-switch-on-color: #00d4ff;
-  --el-switch-off-color: #1e2035;
-  --el-switch-border-color: var(--glass-border);
+  --el-switch-on-color: #2c2c3a;
+  --el-switch-off-color: #f2f2f2;
+  --el-switch-border-color: var(--color-border-light);
 }
 
-html:not(.dark) .theme-switch {
-  --el-switch-on-color: #0088cc;
-  --el-switch-off-color: #e4e7ed;
+html.dark .theme-switch {
+  --el-switch-off-color: #333;
 }
 
 .theme-switch .el-switch__core .el-switch__inner .el-icon {
@@ -521,30 +247,11 @@ html:not(.dark) .theme-switch {
 .sidebar {
   width: $sidebar-width;
   flex-shrink: 0;
-  background: $glass-bg;
-  backdrop-filter: $glass-blur;
-  -webkit-backdrop-filter: $glass-blur;
-  border-right: 1px solid $glass-border;
+  border-right: 1px solid $color-border-light;
   padding: $spacing-lg $spacing-md;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(180deg,
-      transparent,
-      $accent-cyan,
-      transparent
-    );
-    opacity: 0.25;
-  }
 }
 
 .sidebar-nav {
@@ -558,42 +265,18 @@ html:not(.dark) .theme-switch {
   font-size: $font-size-lg;
   color: $color-text-secondary;
   padding: 10px $spacing-md;
-  border-radius: $radius-md;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 0;
-    background: $accent-cyan;
-    border-radius: 0 2px 2px 0;
-    transition: height 0.2s ease;
-  }
+  border-radius: $radius-sm;
+  transition: all $transition-fast;
 
   &:hover {
     color: $color-text-primary;
-    background: rgba(0, 212, 255, 0.04);
-
-    &::before {
-      height: 50%;
-    }
+    background: $color-bg-hover;
   }
 
   &.active {
-    color: $accent-cyan;
-    background: rgba(0, 212, 255, 0.08);
+    color: $color-text-primary;
+    background: $color-bg-hover;
     font-weight: $font-weight-medium;
-
-    &::before {
-      height: 55%;
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
-    }
   }
 }
 
@@ -625,7 +308,6 @@ html:not(.dark) .theme-switch {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
   z-index: 99;
 }
 
@@ -634,35 +316,6 @@ html:not(.dark) .theme-switch {
   min-width: 0;
   overflow: hidden;
   background: $color-bg-primary;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at top right,
-      rgba(0, 212, 255, 0.02),
-      transparent 60%
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
-}
-
-// Page transition
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.page-enter-from {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-.page-leave-to {
-  opacity: 0;
-  transform: translateY(-6px);
 }
 
 // Common page styles
@@ -692,7 +345,7 @@ html:not(.dark) .theme-switch {
 
   &:hover {
     background: $color-bg-hover;
-    color: $accent-cyan;
+    color: $color-text-primary;
   }
 }
 
@@ -702,16 +355,10 @@ html:not(.dark) .theme-switch {
   .el-input__wrapper {
     border-radius: 10px;
     background: $color-bg-tertiary;
-    border: 1px solid var(--glass-border);
-    box-shadow: none !important;
-
-    &:hover {
-      border-color: rgba(0, 212, 255, 0.2);
-    }
+    box-shadow: 0 0 0 1px $color-border inset;
 
     &.is-focus {
-      border-color: rgba(0, 212, 255, 0.4);
-      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.08) !important;
+      box-shadow: 0 0 0 1px $color-text-light inset;
     }
   }
 
@@ -739,24 +386,19 @@ html:not(.dark) .theme-switch {
 }
 
 .el-switch {
-  --el-switch-on-color: #00d4ff;
-  --el-switch-off-color: #dcdfe6;
-}
-
-html:not(.dark) .el-switch {
-  --el-switch-on-color: #0088cc;
+  --el-switch-on-color: #606266;
   --el-switch-off-color: #dcdfe6;
 }
 
 html.dark .el-switch {
-  --el-switch-on-color: #00d4ff;
-  --el-switch-off-color: #1e2035;
+  --el-switch-on-color: #b0b0b0;
+  --el-switch-off-color: #404040;
 }
 
 .el-radio {
   --el-radio-text-color: var(--color-text-primary) !important;
-  --el-radio-input-border-color-hover: rgba(0, 212, 255, 0.3) !important;
-  --el-color-primary: var(--color-primary) !important;
+  --el-radio-input-border-color-hover: #606266 !important;
+  --el-color-primary: #606266 !important;
 }
 
 .el-form-item {
@@ -770,30 +412,24 @@ html.dark .el-switch {
 // Select overrides
 .el-select__wrapper {
   border-radius: $radius-md !important;
-  box-shadow: 0 0 0 1px var(--glass-border) inset !important;
+  box-shadow: 0 0 0 1px $color-border-light inset !important;
   transition: all $transition-fast;
 
   &:hover {
-    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.2) inset !important;
+    box-shadow: 0 0 0 1px $color-border inset !important;
   }
 
   &.is-focused {
-    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.4) inset, 0 0 8px rgba(0, 212, 255, 0.1) !important;
+    box-shadow: 0 0 0 1px $color-border inset !important;
   }
 }
 
 .el-select-dropdown {
-  border-radius: $radius-md !important;
-  border: 1px solid var(--glass-border) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 12px !important;
+  border: 1px solid $color-border-light !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+              0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
   padding: 4px !important;
-}
-
-html.dark .el-select-dropdown {
-  background: rgba(15, 16, 25, 0.92) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-color: rgba(0, 212, 255, 0.1) !important;
 }
 
 .el-select-dropdown__item {
@@ -802,7 +438,7 @@ html.dark .el-select-dropdown {
   transition: background $transition-fast;
 
   &.is-selected {
-    color: $accent-cyan;
+    color: $color-text-primary;
     font-weight: $font-weight-medium;
   }
 }
@@ -810,15 +446,15 @@ html.dark .el-select-dropdown {
 // Input overrides
 .el-input__wrapper {
   border-radius: $radius-md !important;
-  box-shadow: 0 0 0 1px var(--glass-border) inset !important;
+  box-shadow: 0 0 0 1px $color-border-light inset !important;
   transition: all $transition-fast;
 
   &:hover {
-    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.2) inset !important;
+    box-shadow: 0 0 0 1px $color-border inset !important;
   }
 
   &.is-focus {
-    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.4) inset, 0 0 8px rgba(0, 212, 255, 0.1) !important;
+    box-shadow: 0 0 0 1px $color-border inset !important;
   }
 }
 
@@ -829,51 +465,36 @@ html.dark .el-select-dropdown {
   gap: 5px;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
-  padding: 4px 12px;
-  border-radius: 20px;
+  padding: 3px 10px;
+  border-radius: 10px;
   text-transform: capitalize;
-  transition: all 0.2s ease;
 
   &.running {
-    background: rgba(0, 255, 136, 0.1);
-    color: #00ff88;
-    border: 1px solid rgba(0, 255, 136, 0.2);
-
-    .status-dot {
-      animation: dot-pulse 2s ease-in-out infinite;
-    }
+    background: rgba(103, 194, 58, 0.1);
+    color: #67c23a;
   }
 
   &.error {
-    background: rgba(255, 68, 102, 0.1);
-    color: #ff4466;
-    border: 1px solid rgba(255, 68, 102, 0.2);
+    background: rgba(245, 108, 108, 0.1);
+    color: #f56c6c;
   }
 
   &.waiting {
-    background: rgba(255, 170, 0, 0.1);
-    color: #ffaa00;
-    border: 1px solid rgba(255, 170, 0, 0.2);
+    background: rgba(230, 162, 60, 0.1);
+    color: #e6a23c;
   }
 
   &.disabled {
     background: $color-bg-muted;
     color: $color-text-light;
-    border: 1px solid var(--glass-border);
   }
 
   .status-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: currentColor;
-    box-shadow: 0 0 6px currentColor;
   }
-}
-
-@keyframes dot-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.7; }
 }
 
 // Mobile
@@ -888,12 +509,10 @@ html.dark .el-select-dropdown {
     left: 0;
     bottom: 0;
     z-index: 100;
-    background: $glass-bg;
-    backdrop-filter: $glass-blur;
-    -webkit-backdrop-filter: $glass-blur;
+    background: $color-bg-primary;
     transform: translateX(-100%);
     transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    border-right: 1px solid $glass-border;
+    border-right: 1px solid $color-border-light;
 
     &.mobile-open {
       transform: translateX(0);

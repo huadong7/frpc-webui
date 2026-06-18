@@ -85,66 +85,53 @@ const handleClick = (event: MouseEvent) => {
   }
 
   &.primary {
-    background: linear-gradient(135deg, $accent-cyan, #0099cc);
-    border-color: $accent-cyan;
+    background: $color-btn-primary;
+    border-color: $color-btn-primary;
     color: #fff;
-    box-shadow: 0 2px 10px rgba(0, 212, 255, 0.25);
 
     &:hover:not(:disabled) {
-      background: linear-gradient(135deg, #33ddff, #00aadd);
-      box-shadow: 0 4px 18px rgba(0, 212, 255, 0.35);
-      transform: translateY(-1px);
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-      box-shadow: 0 2px 10px rgba(0, 212, 255, 0.25);
+      background: $color-btn-primary-hover;
+      border-color: $color-btn-primary-hover;
     }
   }
 
   &.secondary {
-    background: $glass-bg;
-    backdrop-filter: blur(8px);
-    border-color: $glass-border;
+    background: $color-bg-hover;
+    border-color: $color-border-light;
     color: $color-text-primary;
 
     &:hover:not(:disabled) {
-      border-color: rgba(0, 212, 255, 0.25);
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.1);
+      border-color: $color-border;
     }
   }
 
   &.outline {
     background: transparent;
-    border-color: $glass-border;
+    border-color: $color-border;
     color: $color-text-primary;
 
     &:hover:not(:disabled) {
-      background: rgba(0, 212, 255, 0.04);
-      border-color: rgba(0, 212, 255, 0.25);
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.08);
+      background: $color-bg-hover;
     }
   }
 
   &.is-danger {
     &.primary {
-      background: linear-gradient(135deg, $color-danger, #cc3355);
+      background: $color-danger;
       border-color: $color-danger;
 
       &:hover:not(:disabled) {
-        background: linear-gradient(135deg, #ff5577, $color-danger);
-        box-shadow: 0 4px 18px rgba(255, 68, 102, 0.35);
+        background: $color-danger-dark;
+        border-color: $color-danger-dark;
       }
     }
 
     &.outline, &.secondary {
       color: $color-danger;
-      border-color: rgba(255, 68, 102, 0.2);
 
       &:hover:not(:disabled) {
-        border-color: rgba(255, 68, 102, 0.4);
-        background: rgba(255, 68, 102, 0.06);
-        box-shadow: 0 0 8px rgba(255, 68, 102, 0.1);
+        border-color: $color-danger;
+        background: rgba(239, 68, 68, 0.08);
       }
     }
   }

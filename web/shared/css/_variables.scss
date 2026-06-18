@@ -30,7 +30,6 @@ $color-border-lighter: var(--color-border-lighter);
 
 // Colors - Status
 $color-primary: var(--color-primary);
-$color-success: var(--color-success);
 $color-danger: var(--color-danger);
 $color-danger-dark: var(--color-danger-dark);
 $color-danger-light: var(--color-danger-light);
@@ -38,21 +37,6 @@ $color-danger-light: var(--color-danger-light);
 // Colors - Button
 $color-btn-primary: var(--color-btn-primary);
 $color-btn-primary-hover: var(--color-btn-primary-hover);
-
-// Cyber-tech accents
-$accent-cyan: var(--color-accent-cyan);
-$accent-purple: var(--color-accent-purple);
-$accent-glow: var(--color-accent-glow);
-
-// Glass morphism
-$glass-bg: var(--glass-bg);
-$glass-border: var(--glass-border);
-$glass-blur: var(--glass-blur);
-
-// Glowing shadows
-$glow-sm: var(--glow-sm);
-$glow-md: var(--glow-md);
-$glow-lg: var(--glow-lg);
 
 // Spacing
 $spacing-xs: 4px;
@@ -62,15 +46,12 @@ $spacing-lg: 16px;
 $spacing-xl: 20px;
 
 // Border Radius
-$radius-sm: 8px;
-$radius-md: 12px;
-$radius-lg: 16px;
-$radius-xl: 24px;
+$radius-sm: 6px;
+$radius-md: 8px;
 
 // Transitions
 $transition-fast: 0.15s ease;
 $transition-medium: 0.2s ease;
-$transition-glow: 0.3s ease-in-out;
 
 // Layout
 $header-height: 50px;
