@@ -171,6 +171,11 @@ func (vm *Manager) UpdateAll(cfgs []v1.VisitorConfigurer) {
 	for _, cfg := range cfgs {
 		name := cfg.GetBaseConfig().Name
 		if _, ok := vm.cfgs[name]; !ok {
+			// Skip disabled visitors: nil or true means enabled, false means disabled.
+			enabled := cfg.GetBaseConfig().Enabled
+			if enabled != nil && !*enabled {
+				continue
+			}
 			vm.cfgs[name] = cfg
 			addNames = append(addNames, name)
 			_ = vm.startVisitor(cfg)

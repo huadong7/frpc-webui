@@ -363,6 +363,14 @@ func (svr *Service) loopLoginUntilSuccess(maxInterval time.Duration, firstLoginE
 }
 
 func (svr *Service) UpdateAllConfigurer(proxyCfgs []v1.ProxyConfigurer, visitorCfgs []v1.VisitorConfigurer) error {
+	// Filter out disabled proxies and visitors before applying.
+	// This ensures disabled configs are not started on reconnection and
+	// keeps the cached configs consistent.
+	svr.cfgMu.RLock()
+	reloadCommon := svr.reloadCommon
+	svr.cfgMu.RUnlock()
+	proxyCfgs, visitorCfgs = config.FilterClientConfigurers(reloadCommon, proxyCfgs, visitorCfgs)
+
 	svr.cfgMu.Lock()
 	svr.proxyCfgs = proxyCfgs
 	svr.visitorCfgs = visitorCfgs

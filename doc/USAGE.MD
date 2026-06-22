@@ -38,6 +38,37 @@ frpc-webui 现在支持实时检测端口冲突。在配置代理时，系统会
 
 此功能需要配置 frps dashboard 地址（在 profile 的 dashboard 部分）。如果未配置 dashboard 地址，端口冲突检测将被禁用。
 
+## 二进制编译
+
+```bash
+# 1. 构建前端（生成 web/frpc/dist/）
+make frpc-web
+
+# 2. 编译 Linux amd64 二进制（嵌入 web 资源，静态链接）
+CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -tags frpc -o bin/frpc-linux-amd64 ./cmd/frpc
+
+# 3. 运行
+./bin/frpc-linux-amd64 --web-port 7400
+```
+
+> **说明**：`-tags frpc` 会让编译时嵌入 `web/frpc/dist/` 的前端资源。如果该目录不存在，编译会回退到不嵌入 web（`noweb` tag）。先执行 `make frpc-web` 确保前端资源已构建。
+
+### 交叉编译其他平台
+
+```bash
+# macOS amd64
+CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -trimpath -ldflags "-s -w" -tags frpc -o bin/frpc-darwin-amd64 ./cmd/frpc
+
+# macOS arm64 (Apple Silicon)
+CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -trimpath -ldflags "-s -w" -tags frpc -o bin/frpc-darwin-arm64 ./cmd/frpc
+
+# Windows amd64
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -trimpath -ldflags "-s -w" -tags frpc -o bin/frpc-windows-amd64.exe ./cmd/frpc
+
+# Linux arm64
+CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags "-s -w" -tags frpc -o bin/frpc-linux-arm64 ./cmd/frpc
+```
+
 ## Docker 镜像打包
 
 使用 `dockerfiles/Dockerfile`（非多阶段构建），先在本机编译好 Linux 二进制再打入镜像：
@@ -67,6 +98,8 @@ docker run -d --name frpc-manager -p 7400:7400 -v frpc_data:/data --restart unle
 1. **编辑 Profile 后 proxies 丢失**：编辑 Profile 保存时，前端错误地将 `proxies` 和 `visitors` 设为空数组，导致该 profile 下所有代理配置丢失。已修复：编辑模式保存时会保留原有的 proxies 和 visitors。
 
 2. **Dashboard 连接失败无提示**：创建新代理时，如果 frps dashboard 未配置或登录失败，端口冲突检测静默失效，用户无法得知原因。已修复：创建新代理时若 dashboard 查询失败，会在 Remote Port 输入框下方显示黄色警告提示，引导用户检查 profile 中的 dashboard 配置（地址、用户名、密码）。
+
+3. **Enabled 字段禁用代理/visitor 不生效**：在配置中设置 `"enabled": false` 后，代理或 visitor 仍然被启动。根因：`Enabled` 过滤逻辑已在 `FilterClientConfigurers()` 中实现，但 `UpdateAllConfigurer()` 未调用该过滤函数；`proxy_manager.UpdateAll()` 和 `visitor_manager.UpdateAll()` 也缺少 `Enabled` 检查。已修复：在 `UpdateAllConfigurer()` 中增加 `FilterClientConfigurers()` 调用，在 `proxy_manager.UpdateAll()` 和 `visitor_manager.UpdateAll()` 中增加 `Enabled` 检查作为防御。（2026-06-22）
 
 ### UI视觉更新 (2026-06-17)
 

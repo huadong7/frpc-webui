@@ -166,6 +166,11 @@ func (pm *Manager) UpdateAll(proxyCfgs []v1.ProxyConfigurer) {
 	for _, cfg := range proxyCfgs {
 		name := cfg.GetBaseConfig().Name
 		if _, ok := pm.proxies[name]; !ok {
+			// Skip disabled proxies: nil or true means enabled, false means disabled.
+			enabled := cfg.GetBaseConfig().Enabled
+			if enabled != nil && !*enabled {
+				continue
+			}
 			pxy := NewWrapper(pm.ctx, cfg, pm.clientCfg, pm.encryptionKey, pm.HandleEvent, pm.msgTransporter, pm.vnetController)
 			if pm.inWorkConnCallback != nil {
 				pxy.SetInWorkConnCallback(pm.inWorkConnCallback)
