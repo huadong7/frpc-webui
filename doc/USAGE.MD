@@ -139,3 +139,18 @@ docker run -d --name frpc-manager -p 7400:7400 -v frpc_data:/data --restart unle
 - 无 dashboard 配置的 Profile 会显示错误提示
 
 新增后端 API：`GET /api/profiles/{name}/server/proxies`
+
+功能增强：
+- 支持按 online/offline 状态筛选
+- 支持点击列头排序（Name/Type/Address/Status/Conns/Traffic），默认按 Address 升序
+- 端口数字优先于 subdomain 排序，offline 排最后
+
+### Dashboard 快捷操作 (2026-06-24)
+
+- 运行中的 Profile 卡片下方新增 **+ New Proxy** 按钮，直接跳转到代理创建页
+- **Stop** 按钮改为默认样式，降低视觉优先级（高风险操作不应高亮）
+- 按钮行整体右对齐
+
+### 代理 Name 自动生成 (2026-06-24)
+
+创建代理时，Name 留空并填写 Local Port 后，自动填充为 `127.0.0.1:8080` 格式。用户手动编辑 Name 后停止自动更新。
