@@ -267,6 +267,18 @@ watch(
     })
   },
 )
+
+watch(
+  () => [form.value.localIP, form.value.localPort] as const,
+  ([ip, port]) => {
+    if (isEditing.value) return
+    if (form.value.name) return
+    if (!ip && !port) return
+    const ipPart = ip || '127.0.0.1'
+    const portPart = port || '0'
+    form.value.name = `${ipPart}:${portPart}`
+  },
+)
 </script>
 
 <style scoped lang="scss">
