@@ -41,6 +41,15 @@
             <div v-if="p.runID" class="profile-runid">
               Run ID: {{ p.runID }}
             </div>
+            <el-button
+              v-if="p.status === 'running'"
+              size="small"
+              type="primary"
+              plain
+              @click.stop="goToCreateProxy(p.name)"
+            >
+              + New Proxy
+            </el-button>
           </div>
           <div class="profile-card-actions" @click.stop>
             <el-button
@@ -54,7 +63,6 @@
             <el-button
               v-else
               size="small"
-              type="warning"
               @click="handleStop(p.name)"
             >
               Stop
@@ -96,6 +104,7 @@ const profileStore = useProfileStore()
 const goToCreateProfile = () => router.push('/profiles/create')
 const goToProfile = (name: string) => router.push(`/profiles/${encodeURIComponent(name)}/proxies`)
 const goToProfileEdit = (name: string) => router.push(`/profiles/${encodeURIComponent(name)}/edit`)
+const goToCreateProxy = (name: string) => router.push(`/profiles/${encodeURIComponent(name)}/proxies/create`)
 
 const handleStart = async (name: string) => {
   try {
