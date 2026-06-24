@@ -41,17 +41,17 @@
             <div v-if="p.runID" class="profile-runid">
               Run ID: {{ p.runID }}
             </div>
+          </div>
+          <div class="profile-card-actions" @click.stop>
             <el-button
               v-if="p.status === 'running'"
               size="small"
               type="primary"
               plain
-              @click.stop="goToCreateProxy(p.name)"
+              @click="goToCreateProxy(p.name)"
             >
               + New Proxy
             </el-button>
-          </div>
-          <div class="profile-card-actions" @click.stop>
             <el-button
               v-if="p.status !== 'running'"
               size="small"
@@ -228,6 +228,7 @@ onMounted(() => {
 
 .profile-card-actions {
   display: flex;
+  justify-content: flex-end;
   gap: $spacing-sm;
 }
 
