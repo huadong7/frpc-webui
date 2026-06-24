@@ -132,6 +132,22 @@ func (m *FrpcManager) GetProfileUsedPorts(name string) (*UsedPorts, error) {
 	return client.GetUsedPorts()
 }
 
+// GetProfileServerProxies queries the frps dashboard for all proxies on the server.
+func (m *FrpcManager) GetProfileServerProxies(name string) (*ServerProxyListResp, error) {
+	entry, ok := m.profileStore.GetProfile(name)
+	if !ok {
+		return nil, fmt.Errorf("profile %q not found", name)
+	}
+
+	dashboard := entry.Config.Dashboard
+	if dashboard.Addr == "" {
+		return nil, fmt.Errorf("frps dashboard address not configured for profile %q", name)
+	}
+
+	client := NewFrpsClient(dashboard.Addr, dashboard.User, dashboard.Password)
+	return client.GetServerProxies()
+}
+
 // ─── Profile Management ────────────────────────────────────────────
 
 // ListProfiles returns all profiles with their runtime statuses.

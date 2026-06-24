@@ -53,6 +53,14 @@
             Dashboard
           </router-link>
           <router-link
+            to="/server-proxies"
+            class="sidebar-link"
+            :class="{ active: route.path === '/server-proxies' }"
+            @click="closeSidebar"
+          >
+            Server Proxies
+          </router-link>
+          <router-link
             to="/profiles"
             class="sidebar-link"
             :class="{ active: route.path.startsWith('/profiles') }"

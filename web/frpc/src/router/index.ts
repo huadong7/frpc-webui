@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
+import ServerProxies from '../views/ServerProxies.vue'
 import ProfileList from '../views/ProfileList.vue'
 import ProfileEdit from '../views/ProfileEdit.vue'
 import ProxyDetail from '../views/ProxyDetail.vue'
@@ -16,6 +17,11 @@ const router = createRouter({
       path: '/',
       name: 'Dashboard',
       component: Dashboard,
+    },
+    {
+      path: '/server-proxies',
+      name: 'ServerProxies',
+      component: ServerProxies,
     },
     // Profiles
     {

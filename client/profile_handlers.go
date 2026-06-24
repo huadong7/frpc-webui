@@ -61,6 +61,7 @@ func registerProfileRoutes(helper *httppkg.RouterRegisterHelper, m *FrpcManager)
 
 	// Profile-scoped frps dashboard query
 	api.HandleFunc("/profiles/{name}/ports/used", httppkg.MakeHTTPHandlerFunc(handleGetProfileUsedPorts(m))).Methods(http.MethodGet)
+	api.HandleFunc("/profiles/{name}/server/proxies", httppkg.MakeHTTPHandlerFunc(handleGetProfileServerProxies(m))).Methods(http.MethodGet)
 
 	// Static files - registered on main router (not /api), with auth
 	subRouter := helper.Router.NewRoute().Subrouter()
@@ -464,5 +465,16 @@ func handleGetProfileUsedPorts(m *FrpcManager) httppkg.APIHandler {
 			return nil, httppkg.NewError(http.StatusBadRequest, err.Error())
 		}
 		return usedPorts, nil
+	}
+}
+
+func handleGetProfileServerProxies(m *FrpcManager) httppkg.APIHandler {
+	return func(ctx *httppkg.Context) (any, error) {
+		name := ctx.Param("name")
+		proxies, err := m.GetProfileServerProxies(name)
+		if err != nil {
+			return nil, httppkg.NewError(http.StatusBadRequest, err.Error())
+		}
+		return proxies, nil
 	}
 }

@@ -127,3 +127,15 @@ docker run -d --name frpc-manager -p 7400:7400 -v frpc_data:/data --restart unle
 - 页面过渡动画
 
 恢复为轻量级的静态样式，确保浏览器访问流畅。
+
+### Server Proxies 页面 (2026-06-23)
+
+新增 "Server Proxies" 页面，在 sidebar 的 Dashboard 下方。该页面展示各 frps 服务器上已建立的所有代理（包括非本 frpc 创建的），按 Profile 分组显示。
+
+功能：
+- 从 frps dashboard API 获取完整代理信息（名称、类型、状态、连接数、流量等）
+- 每个 Profile 一个区域，显示该服务器上所有代理的表格
+- 支持手动刷新
+- 无 dashboard 配置的 Profile 会显示错误提示
+
+新增后端 API：`GET /api/profiles/{name}/server/proxies`

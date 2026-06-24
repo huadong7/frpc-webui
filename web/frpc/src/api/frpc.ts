@@ -225,3 +225,31 @@ export const getProfileUsedPorts = (profile: string) => {
     `/api/profiles/${encodeURIComponent(profile)}/ports/used`,
   )
 }
+
+// Frps dashboard query - server proxies
+export interface ServerProxyInfo {
+  name: string
+  type: string
+  remotePort?: number
+  subDomain?: string
+  customDomains?: string
+  status: string
+  curConns: number
+  todayTrafficIn: number
+  todayTrafficOut: number
+  lastStartTime: string
+  lastCloseTime: string
+  user: string
+  clientID: string
+  conf: any
+}
+
+export interface ServerProxyListResp {
+  proxies: ServerProxyInfo[]
+}
+
+export const getProfileServerProxies = (profile: string) => {
+  return http.get<ServerProxyListResp>(
+    `/api/profiles/${encodeURIComponent(profile)}/server/proxies`,
+  )
+}
